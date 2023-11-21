@@ -1,8 +1,8 @@
 import {
   sampleRUM,
   buildBlock,
-  loadHeader,
-  loadFooter,
+  // loadHeader,
+  // loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -105,8 +105,9 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  // single page for authenticated internal audience, no need for header or footer
+  // loadHeader(doc.querySelector('header'));
+  // loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

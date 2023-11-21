@@ -1,0 +1,104 @@
+/* add styles */
+div.section.okrs-container {
+    padding: 0 64px 32px;
+}
+
+div.section.okrs-container p {
+    font-size: var(--body-font-size-s);
+}
+
+#key {
+  padding-top: 8px;
+}
+
+.okrs input {
+    width: 400px;
+}
+
+.okrs input#newkey {
+    width: 350px;
+}
+
+.okrs input#expiry {
+    width: 200px;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+button.collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 400px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: var(--body-font-size-xs);
+    border-radius: 0;
+    margin: 0;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+    width: 364px;
+}
+
+.content label, .content input {
+    font-size: var(--body-font-size-xs);
+}
+
+.collapsible::after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active::after {
+    content: '\02796'; /* Unicode character for "minus" sign (-) */
+}
+
+.objective, .desc {
+    font-size: var(--body-font-size-s);
+}
+
+.objective {
+    font-weight: bold;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    font-size: var(--body-font-size-xs);
+}
+
+.header {
+    font-weight: bold;
+    background-color: var(--highlight-background-color);
+}
+
+.odd {
+    background-color: var(--overlay-background-color);
+}
+
+.progressborder {
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.progressbar {
+    /* padding: 8px 16px; */
+    height: 32px;
+    background-color: #4CAF50;
+    font-size: var(--body-font-size-xs);
+}
