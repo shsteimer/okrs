@@ -18,16 +18,28 @@ export default async function decorate(block) {
     },
   }).then((response) => response.json()).then((data) => {
     let output = '';
+    // output = '<button>Add</button>';
     data.OKRs.data.forEach((element) => {
-      const percent = (data[element.Objective].total * 100) / element['FY24 Target'];
+      // prepare subset of metrics data for the current objective in the loop
+      const objArray = [];
+      data.Metrics.data.forEach((metric) => {
+        if (element.Objective === metric.Objective) {
+          const obj = {};
+          obj.Who = metric.Who;
+          obj.Date = metric.Date;
+          obj.Summary = metric.Summary;
+          obj.Notes = metric.Notes;
+          objArray.push(obj);
+        }
+      });
+
+      // objective header
+      const percent = (objArray.length * 100) / element['FY24 Target'];
       output += `
         <hr>
         <div class=objective>${element.Objective}</div>
         <div class=desc>${element.KR}</div>
-        <div class=desc>${data[element.Objective].total} of ${element['FY24 Target']}
-        -
-        <a href='${element.Link}' target='_blank'>Add</a>
-        </div>
+        <div class=desc>${objArray.length} of ${element['FY24 Target']}</div>
         <div class='progressborder'>
             <div class='progressbar' style='width: ${percent}%'></div>
         </div>
@@ -37,7 +49,7 @@ export default async function decorate(block) {
       let headerDrawn = false;
       let i = 0;
       let row = '';
-      data[element.Objective].data.forEach((metric) => {
+      objArray.forEach((metric) => {
         // only draw header row once
         if (!headerDrawn) {
           Object.keys(metric).forEach((field) => {
@@ -54,13 +66,15 @@ export default async function decorate(block) {
         }
         i += 1;
 
-        // display data from spreadsheet
+        // display metrics data
         Object.values(metric).forEach((value) => {
           output += `<div class='item${row}'>${value}</div>`;
         });
       });
       output += '</div>';
     });
+
+    output += '<hr>';
 
     block.innerHTML = output;
   }).catch(() => {
