@@ -24,7 +24,6 @@ export default async function decorate(block) {
         <hr>
         <div class=objective>${element.Objective}</div>
         <div class=desc>${element.KR}</div>
-        <div class=desc></div>
         <div class=desc>${data[element.Objective].total} of ${element['FY24 Target']}
         -
         <a href='${element.Link}' target='_blank'>Add</a>
