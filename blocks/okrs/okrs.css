@@ -7,52 +7,36 @@ div.section.okrs-container p {
     font-size: var(--body-font-size-s);
 }
 
-#key {
+#results {
   padding-top: 8px;
+  font-size: var(--body-font-size-xs);
 }
 
-.okrs input {
-    width: 400px;
+.hide {
+    display: none;
 }
 
-.okrs input#newkey {
-    width: 350px;
+.okrs input, .okrs select, .okrs textarea {
+    width: 500px;
 }
 
-.okrs input#expiry {
+.okrs select#objective {
+    width: 300px;
+}
+
+.okrs select#who, .okrs input#date {
     width: 200px;
-}
-
-/* Style the button that is used to open and close the collapsible content */
-button.collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 400px;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: var(--body-font-size-xs);
-    border-radius: 0;
-    margin: 0;
-}
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .collapsible:hover {
-    background-color: #ccc;
 }
 
 /* Style the collapsible content. Note: hidden by default */
 .content {
     padding: 0 18px;
-    display: none;
     overflow: hidden;
     background-color: #f1f1f1;
-    width: 364px;
+    width: 500px;
 }
 
-.content label, .content input {
+.content label, .content input, .content select, .content textarea {
     font-size: var(--body-font-size-xs);
 }
 

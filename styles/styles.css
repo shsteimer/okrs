@@ -176,7 +176,7 @@ a.button.secondary, button.secondary {
   color: var(--text-color)
 }
 
-main input {
+main input, main select, main textarea {
   font-size: 1.25rem;
   width: 100%;
   max-width: 50rem;
@@ -190,7 +190,7 @@ main input {
   background-color: var(--background-color);
 }
 
-main input:hover {
+main input:hover, main select:hover, main textarea:hover {
   border: 1px solid var(--text-color);
 }
 
