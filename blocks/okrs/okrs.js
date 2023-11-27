@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // import { readBlockConfig } from '../../scripts/aem.js';
 
 /**
@@ -8,10 +9,10 @@ export default async function decorate(block) {
   // const cfg = readBlockConfig(block);
   block.innerHTML = '';
 
-  // before fetching the data, preview the sheet so it is accessible
-  // TODO make this sequential, currently the data fetch happens before the preview
+  // preview the sheet so the latest data is accessible
+  // wait for the preview to complete before proceeding to fetch the data
   const preview = new URL('https://admin.hlx.page/preview/langswei/okrs/main/okrs.json');
-  fetch(preview, {
+  await fetch(preview, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,7 +29,7 @@ export default async function decorate(block) {
   });
 
   // retrieve OKR data
-  const okrs = new URL(`${window.location.protocol}//${window.location.host}/okrs.json?sheet=OKRs&sheet=Metrics`);
+  const okrs = new URL(`${window.location.protocol}//${window.location.host}/okrs.json?sheet=OKRs&sheet=Metrics&sheet=Team`);
 
   fetch(okrs, {
     method: 'GET',
@@ -47,29 +48,26 @@ export default async function decorate(block) {
             <label for='objective'>* Objective</label>
             <select id='objective' name='objective'>
                 <option value=''>--Select One--</option>
-                <option value='Helix Direct Customer Engagement'>Helix Direct Customer Engagement</option>
-                <option value='Helix Customer Driven Innovation'>Helix Customer Driven Innovation</option>
-                <option value='Helix ACS/Partner Success'>Helix ACS/Partner Success</option>
-                <option value='Helix Data Intelligence Innovation'>Helix Data Intelligence Innovation</option>
-                <option value='Helix Data User Interactions'>Helix Data User Interactions</option>
-                <option value='Helix Knowledge Sharing'>Helix Knowledge Sharing</option>
-                <option value='Technical Evangelism'>Technical Evangelism</option>
+    `;
+
+    // output objectives
+    data.OKRs.data.forEach((element) => {
+      output += `<option value='${element.Objective}'>${element.Objective}</option>`;
+    });
+
+    output += `
             </select>
             <label for='who'>* Who</label>
             <select id='who' name='who'>
                 <option value=''>--Select One--</option>
-                <option value='Amol'>Amol</option>
-                <option value='Brian'>Brian</option>
-                <option value='Bryan'>Bryan</option>
-                <option value='Damian'>Damian</option>
-                <option value='Darin'>Darin</option>
-                <option value='Gillian'>Gillian</option>
-                <option value='James'>James</option>
-                <option value='Kiran'>Kiran</option>
-                <option value='Kunwar'>Kunwar</option>
-                <option value='Marquise'>Marquise</option>
-                <option value='Sean'>Sean</option>
-                <option value='Varun'>Varun</option>
+    `;
+
+    // output team members
+    data.Team.data.forEach((element) => {
+      output += `<option value='${element.Name}'>${element.Name}</option>`;
+    });
+
+    output += `
             </select>
             <label for='date'>* Date</label>
             <input id='date' name='date' type='date' value='${today}'>
@@ -79,8 +77,8 @@ export default async function decorate(block) {
             <textarea id='notes' name="notes" cols="40" rows="5"></textarea>
             <button id='add'>Add</button>
             <button id='cancel'>Cancel</button>
-            <div id='results'></div>
         </div>
+        <div id='results'></div>
     `;
 
     data.OKRs.data.forEach((element) => {
@@ -195,7 +193,7 @@ export default async function decorate(block) {
           },
         }).then((response) => {
           if (response.status === 201) {
-            block.querySelector('#results').innerHTML = 'Saved.  It takes time for the data to be processed, please refresh page in one minute, then again one minute afterward.';
+            block.querySelector('#results').innerHTML = 'Saved.  It takes time for the data to be processed, please refresh page in one minute.';
           } else {
             block.querySelector('#results').innerHTML = 'Error, not saved.';
           }
@@ -205,6 +203,6 @@ export default async function decorate(block) {
       }
     });
   }).catch(() => {
-    block.innerHTML = 'Error retrieving OKR data.';
+    block.querySelector('#results').innerHTML = 'Error retrieving OKR data.';
   });
 }
